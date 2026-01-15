@@ -20,7 +20,7 @@
 - create public bitbucket or github repository
 - commit and push changes continuously
 - use proper commit messages
-- share your solution with us (link or read permissions for miroslava.filcakova@goodrequest.com)
+- share your solution with us (public link or read permissions for peter.reguli@goodrequest.com and matus.vikartovsky@goodrequest.com)
 
 
 ### You can
