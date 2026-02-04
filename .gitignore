@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Environment variables file
+.env
+
+# Local database file
+postgres_data/

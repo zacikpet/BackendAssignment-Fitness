@@ -3,10 +3,22 @@ import { Sequelize } from 'sequelize'
 
 import defineExercise from './exercise'
 import defineProgram from './program'
+import dotenv from 'dotenv'
 
-const sequelize: Sequelize = new Sequelize('postgresql://localhost:5432/fitness_app', {
-	logging: false
-})
+dotenv.config()
+
+
+const sequelize: Sequelize = new Sequelize(
+	process.env.POSTGRES_DB,
+	process.env.POSTGRES_USER,
+	process.env.POSTGRES_PASSWORD,
+	{
+		host: process.env.POSTGRES_HOST,
+		port: parseInt(process.env.POSTGRES_PORT),
+		logging: false,
+		dialect: 'postgres'
+	}
+)
 
 sequelize.authenticate().catch((e: any) => console.error(`Unable to connect to the database${e}.`))
 
