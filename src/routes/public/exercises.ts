@@ -4,23 +4,29 @@ import {
 	type Response,
 	Router,
 } from "express";
-
-import { models } from "../db";
-import passport from "../utils/passport-config";
+import { models } from "../../db";
+import passport from "../../utils/passport-config";
 
 const router = Router();
 
-const { Program } = models;
+const { Exercise, Program } = models;
 
 export default () => {
 	router.get(
 		"/",
 		passport.authenticate("jwt", { session: false }),
 		async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-			const programs = await Program.findAll();
+			const exercises = await Exercise.findAll({
+				include: [
+					{
+						model: Program,
+					},
+				],
+			});
+
 			return res.json({
-				data: programs,
-				message: "List of programs",
+				data: exercises,
+				message: "List of exercises",
 			});
 		},
 	);
