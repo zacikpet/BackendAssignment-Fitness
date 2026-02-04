@@ -1,13 +1,13 @@
-import { Sequelize, DataTypes, Model } from 'sequelize'
-import { EXERCISE_DIFFICULTY } from '../utils/enums'
-import { ExerciseModel } from './exercise'
+import { DataTypes, type Model, type Sequelize } from "sequelize";
+import type { EXERCISE_DIFFICULTY } from "../utils/enums";
+import type { ExerciseModel } from "./exercise";
 
 export interface ProgramModel extends Model {
-	id: number
-	difficulty: EXERCISE_DIFFICULTY
-	name: String
+	id: number;
+	difficulty: EXERCISE_DIFFICULTY;
+	name: string;
 
-	exercises: ExerciseModel[]
+	exercises: ExerciseModel[];
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
@@ -18,27 +18,27 @@ export default (sequelize: Sequelize, modelName: string) => {
 				type: DataTypes.BIGINT,
 				primaryKey: true,
 				allowNull: false,
-				autoIncrement: true
+				autoIncrement: true,
 			},
 			name: {
 				type: DataTypes.STRING(200),
-			}
-		}, 
+			},
+		},
 		{
 			paranoid: true,
 			timestamps: true,
-			tableName: 'programs'
-		}
-	)
+			tableName: "programs",
+		},
+	);
 
 	ProgramModelCtor.associate = (models) => {
 		ProgramModelCtor.hasMany(models.Exercise, {
 			foreignKey: {
-				name: 'programID',
-				allowNull: false
-			}
-		})
-	}
+				name: "programID",
+				allowNull: false,
+			},
+		});
+	};
 
-	return ProgramModelCtor
-}
+	return ProgramModelCtor;
+};
