@@ -1,14 +1,16 @@
+import http from "node:http";
 import express from "express";
-import http from "http";
 
 import { sequelize } from "./db";
 import ExerciseRouter from "./routes/exercises";
 import ProgramRouter from "./routes/programs";
+import passport from "./utils/passport-config";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(passport.initialize());
 app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
 
