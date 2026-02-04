@@ -6,6 +6,11 @@ export interface UserModel extends Model {
 	id: number;
 	email: string;
 	password: string;
+	role: USER_ROLE;
+	name?: string;
+	surname?: string;
+	nickName?: string;
+	age?: number;
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
