@@ -1,8 +1,9 @@
+import fs from "node:fs";
 import dotenv from "dotenv";
-import fs from "fs";
 import { Sequelize } from "sequelize";
 import defineExercise from "./exercise";
 import defineProgram from "./program";
+import defineUser from "./user";
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ const sequelize: Sequelize = new Sequelize(
 	process.env.POSTGRES_PASSWORD,
 	{
 		host: process.env.POSTGRES_HOST,
-		port: parseInt(process.env.POSTGRES_PORT),
+		port: parseInt(process.env.POSTGRES_PORT, 10),
 		logging: false,
 		dialect: "postgres",
 	},
@@ -24,10 +25,12 @@ sequelize
 
 const Exercise = defineExercise(sequelize, "exercise");
 const Program = defineProgram(sequelize, "program");
+const User = defineUser(sequelize, "user");
 
 const models = {
 	Exercise,
 	Program,
+	User,
 };
 type Models = typeof models;
 

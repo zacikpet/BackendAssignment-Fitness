@@ -1,14 +1,14 @@
-import { Sequelize as OriginalSequelize } from "sequelize/types/sequelize";
 import { QueryInterface as OriginalQueryInterface } from "sequelize/types/dialects/abstract/query-interface";
-import {
-	Model as OriginalModel,
-	ModelStatic as OriginalModelCtor,
+import type {
+	Attributes,
 	ModelAttributes,
 	ModelOptions,
-	Attributes,
+	Model as OriginalModel,
+	ModelStatic as OriginalModelCtor,
 } from "sequelize/types/model";
+import { Sequelize as OriginalSequelize } from "sequelize/types/sequelize";
 
-import { Models } from "../../db";
+import type { Models } from "../../db";
 
 declare module "sequelize" {
 	interface IModels extends Models {}
