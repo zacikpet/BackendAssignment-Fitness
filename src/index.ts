@@ -3,6 +3,7 @@ import express from "express";
 
 import { sequelize } from "./db";
 import ExerciseRouter from "./routes/exercises";
+import LoginRouter from "./routes/login";
 import ProgramRouter from "./routes/programs";
 import RegisterRouter from "./routes/register";
 import passport from "./utils/passport-config";
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use("/register", RegisterRouter());
+app.use("/login", LoginRouter());
 app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
 
