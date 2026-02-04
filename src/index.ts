@@ -2,10 +2,10 @@ import http from "node:http";
 import express from "express";
 
 import { sequelize } from "./db";
-import ExerciseRouter from "./routes/public/exercises";
-import LoginRouter from "./routes/public/login";
-import ProgramRouter from "./routes/public/programs";
-import RegisterRouter from "./routes/public/register";
+import ExerciseRouter from "./routes/exercises";
+import LoginRouter from "./routes/login";
+import ProgramRouter from "./routes/programs";
+import RegisterRouter from "./routes/register";
 import passport from "./utils/passport-config";
 
 const app = express();

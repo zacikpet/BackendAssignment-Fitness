@@ -1,10 +1,8 @@
 import { DataTypes, type Model, type Sequelize } from "sequelize";
-import type { EXERCISE_DIFFICULTY } from "../utils/enums";
 import type { ExerciseModel } from "./exercise";
 
 export interface ProgramModel extends Model {
 	id: number;
-	difficulty: EXERCISE_DIFFICULTY;
 	name: string;
 
 	exercises: ExerciseModel[];

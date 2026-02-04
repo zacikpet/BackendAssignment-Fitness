@@ -4,7 +4,7 @@ import {
 	type Response,
 	Router,
 } from "express";
-import { models } from "../../db";
+import { models } from "../db";
 
 const router = Router();
 

@@ -1,0 +1,114 @@
+import {
+	type NextFunction,
+	type Request,
+	type Response,
+	Router,
+} from "express";
+import { models } from "../db";
+import { USER_ROLE } from "../utils/enums";
+import { AllowedRoles } from "../utils/handlers";
+import passport from "../utils/passport-config";
+
+const router = Router();
+
+const { Exercise, Program } = models;
+
+export default () => {
+	router.get(
+		"/",
+		async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			console.log(_req.user);
+
+			const exercises = await Exercise.findAll({
+				include: [
+					{
+						model: Program,
+					},
+				],
+			});
+
+			return res.json({
+				data: exercises,
+				message: "List of exercises",
+			});
+		},
+	);
+
+	router.post(
+		"/",
+		passport.authenticate("jwt", { session: false }),
+		AllowedRoles(USER_ROLE.ADMIN),
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const { name, difficulty, programID } = req.body;
+
+			const exercise = await Exercise.create({
+				name,
+				difficulty,
+				programID,
+			});
+
+			return res.json({
+				message: "Exercise created successfully",
+				exercise,
+			});
+		},
+	);
+
+	router.put(
+		"/:id",
+		passport.authenticate("jwt", { session: false }),
+		AllowedRoles(USER_ROLE.ADMIN),
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const { id } = req.params;
+			const { name, difficulty, programID } = req.body;
+
+			const exercise = await Exercise.findByPk(id);
+
+			if (!exercise) {
+				return res.status(404).json({ message: "Exercise not found" });
+			}
+
+			await Exercise.update(
+				{
+					name: name ?? null,
+					difficulty: difficulty ?? null,
+					programID: programID ?? null,
+				},
+				{
+					where: { id },
+					returning: true,
+				},
+			);
+
+			const updatedExercise = await Exercise.findByPk(id);
+
+			return res.json({
+				message: "Exercise updated successfully",
+				exercise: updatedExercise,
+			});
+		},
+	);
+
+	router.delete(
+		"/:id",
+		passport.authenticate("jwt", { session: false }),
+		AllowedRoles(USER_ROLE.ADMIN),
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const { id } = req.params;
+
+			const exercise = await Exercise.findByPk(id);
+
+			if (!exercise) {
+				return res.status(404).json({ message: "Exercise not found" });
+			}
+
+			await Exercise.destroy({ where: { id } });
+
+			return res.json({
+				message: "Exercise deleted successfully",
+			});
+		},
+	);
+
+	return router;
+};
