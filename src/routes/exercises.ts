@@ -1,10 +1,10 @@
-import { equal } from "assert";
 import {
 	type NextFunction,
 	type Request,
 	type Response,
 	Router,
 } from "express";
+import { Op } from "sequelize";
 import { models } from "../db";
 import { USER_ROLE } from "../utils/enums";
 import { allowedRoles } from "../utils/handlers";
@@ -12,23 +12,48 @@ import passport from "../utils/passport-config";
 
 const router = Router();
 
-const { Exercise, Program, ExerciseCompletion } = models;
+const { Exercise, ExerciseCompletion, Program } = models;
 
 export default () => {
 	router.get(
 		"/",
-		async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-			const exercises = await Exercise.findAll({
-				include: [
-					{
-						model: Program,
-					},
-				],
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const page = parseInt(req.query.page?.toString(), 10) || 1;
+			const limit = parseInt(req.query.limit?.toString(), 10) || 10;
+			const offset = (page - 1) * limit;
+
+			const programID =
+				parseInt(req.query.programID?.toString(), 10) ?? undefined;
+			const search = req.query.search?.toString() ?? undefined;
+
+			let where = {};
+
+			if (programID) {
+				where = { ...where, programID };
+			}
+
+			if (search) {
+				where = { ...where, name: { [Op.substring]: search } };
+			}
+
+			const { count, rows } = await Exercise.findAndCountAll({
+				where,
+				limit,
+				offset,
+				include: {
+					model: Program,
+				},
 			});
 
 			return res.json({
-				data: exercises,
+				data: rows,
 				message: "List of exercises",
+				pagination: {
+					limit,
+					offset,
+					totalCount: count,
+					totalPages: Math.ceil(count / limit),
+				},
 			});
 		},
 	);

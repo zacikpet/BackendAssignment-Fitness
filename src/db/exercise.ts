@@ -43,9 +43,7 @@ export default (sequelize: Sequelize, modelName: string) => {
 				allowNull: false,
 			},
 		});
-	};
 
-	ExerciseModelCtor.associate = (models) => {
 		ExerciseModelCtor.hasMany(models.ExerciseCompletion, {
 			foreignKey: {
 				name: "exerciseID",
