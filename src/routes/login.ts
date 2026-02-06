@@ -29,7 +29,7 @@ export default () => {
 
 		return res.json({
 			message: "Login successful",
-			data: { token, user: { id: user.id, role: user.role } },
+			data: { token, user: { id: user.id } },
 		});
 	});
 
