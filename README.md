@@ -3,7 +3,7 @@
 ## How to run locally
 1. Create .env file (you can copy .env.example)
 2. Run backend and database using `docker-compose up`
-3. The API is available at localhost:8000
+3. The API is available at http://localhost:8000
 
 
 
