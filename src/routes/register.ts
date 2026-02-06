@@ -22,7 +22,13 @@ export default () => {
 
 			return res.json({
 				message: "User registered successfully",
-				user: { id: user.id, email: user.email, role: user.role },
+				data: {
+					user: {
+						id: user.id,
+						email: user.email,
+						role: user.role,
+					},
+				},
 			});
 		},
 	);

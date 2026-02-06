@@ -6,6 +6,7 @@ import ExerciseRouter from "./routes/exercises";
 import LoginRouter from "./routes/login";
 import ProgramRouter from "./routes/programs";
 import RegisterRouter from "./routes/register";
+import UserRouter from "./routes/users";
 import passport from "./utils/passport-config";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use("/register", RegisterRouter());
 app.use("/login", LoginRouter());
 app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
+app.use("/users", UserRouter());
 
 const httpServer = http.createServer(app);
 

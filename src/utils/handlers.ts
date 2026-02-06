@@ -9,4 +9,4 @@ const allowedRoles = (...allowedRoles: string[]) => {
 	};
 };
 
-export { allowedRoles as AllowedRoles };
+export { allowedRoles };

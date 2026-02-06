@@ -6,7 +6,7 @@ import {
 } from "express";
 import { models } from "../db";
 import { USER_ROLE } from "../utils/enums";
-import { AllowedRoles } from "../utils/handlers";
+import { allowedRoles } from "../utils/handlers";
 import passport from "../utils/passport-config";
 
 const router = Router();
@@ -17,8 +17,6 @@ export default () => {
 	router.get(
 		"/",
 		async (_req: Request, res: Response, _next: NextFunction): Promise<any> => {
-			console.log(_req.user);
-
 			const exercises = await Exercise.findAll({
 				include: [
 					{
@@ -37,7 +35,7 @@ export default () => {
 	router.post(
 		"/",
 		passport.authenticate("jwt", { session: false }),
-		AllowedRoles(USER_ROLE.ADMIN),
+		allowedRoles(USER_ROLE.ADMIN),
 		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 			const { name, difficulty, programID } = req.body;
 
@@ -49,15 +47,15 @@ export default () => {
 
 			return res.json({
 				message: "Exercise created successfully",
-				exercise,
+				data: exercise,
 			});
 		},
 	);
 
-	router.put(
+	router.patch(
 		"/:id",
 		passport.authenticate("jwt", { session: false }),
-		AllowedRoles(USER_ROLE.ADMIN),
+		allowedRoles(USER_ROLE.ADMIN),
 		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 			const { id } = req.params;
 			const { name, difficulty, programID } = req.body;
@@ -70,13 +68,12 @@ export default () => {
 
 			await Exercise.update(
 				{
-					name: name ?? null,
-					difficulty: difficulty ?? null,
-					programID: programID ?? null,
+					name,
+					difficulty,
+					programID,
 				},
 				{
 					where: { id },
-					returning: true,
 				},
 			);
 
@@ -84,7 +81,7 @@ export default () => {
 
 			return res.json({
 				message: "Exercise updated successfully",
-				exercise: updatedExercise,
+				data: updatedExercise,
 			});
 		},
 	);
@@ -92,7 +89,7 @@ export default () => {
 	router.delete(
 		"/:id",
 		passport.authenticate("jwt", { session: false }),
-		AllowedRoles(USER_ROLE.ADMIN),
+		allowedRoles(USER_ROLE.ADMIN),
 		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
 			const { id } = req.params;
 
