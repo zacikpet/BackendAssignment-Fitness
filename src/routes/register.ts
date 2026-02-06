@@ -1,37 +1,10 @@
-import {
-	type NextFunction,
-	type Request,
-	type Response,
-	Router,
-} from "express";
-import { models } from "../db";
+import { Router } from "express";
+import { register } from "../handlers/register";
 
 const router = Router();
 
 export default () => {
-	router.post(
-		"/",
-		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
-			const { email, password, role } = req.body;
-
-			const user = await models.User.create({
-				email,
-				password,
-				role,
-			});
-
-			return res.json({
-				message: "User registered successfully",
-				data: {
-					user: {
-						id: user.id,
-						email: user.email,
-						role: user.role,
-					},
-				},
-			});
-		},
-	);
+	router.post("/", register);
 
 	return router;
 };
