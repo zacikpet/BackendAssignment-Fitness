@@ -8,6 +8,18 @@ export const register = async (
 ): Promise<any> => {
 	const { email, password, role } = req.body;
 
+	const existingUser = await models.User.findOne({
+		where: {
+			email,
+		},
+	});
+
+	if (existingUser) {
+		return res.status(407).json({
+			message: res.__("email_already_registered"),
+		});
+	}
+
 	const user = await models.User.create({
 		email,
 		password,

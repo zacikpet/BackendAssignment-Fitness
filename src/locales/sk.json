@@ -1,4 +1,5 @@
 {
+    "email_already_registered": "Email už je registrovaný",
     "registration_successful": "Registrácia úspešná",
     "invalid_email_or_password": "Nesprávne meno alebo heslo",
     "login_successful": "Prihlásenie úspešné",
