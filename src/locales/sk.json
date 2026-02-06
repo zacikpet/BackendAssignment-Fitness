@@ -17,5 +17,6 @@
     "user_updated": "Používateľ úspešne aktualizovaný",
     "body_validation_failed": "Validácia tela requestu zlyhala",
     "query_validation_failed": "Validácie query parametrov zlyhala",
-    "params_validation_failed": "Validácia URL parametrov zlyhala"
+    "params_validation_failed": "Validácia URL parametrov zlyhala",
+    "something_went_wrong": "Niečo sa pokazilo :("
 }

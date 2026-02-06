@@ -17,5 +17,6 @@
     "user_updated": "User updated successfuly",
     "body_validation_failed": "Body validation failed",
     "query_validation_failed": "Query validation failed",
-    "params_validation_failed": "Path parameters validation failed"
+    "params_validation_failed": "Path parameters validation failed",
+    "something_went_wrong": "Something went wrong"
 }

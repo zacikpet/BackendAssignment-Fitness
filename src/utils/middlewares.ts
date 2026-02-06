@@ -37,7 +37,7 @@ export const validateBody = (dtoClass: ClassConstructor<object>) => {
 	};
 };
 
-export function validateQuery(dtoClass: ClassConstructor<object>) {
+export const validateQuery = (dtoClass: ClassConstructor<object>) => {
 	return async (
 		req: Request,
 		res: Response,
@@ -61,9 +61,9 @@ export function validateQuery(dtoClass: ClassConstructor<object>) {
 
 		next();
 	};
-}
+};
 
-export function validateParams(dtoClass: ClassConstructor<object>) {
+export const validateParams = (dtoClass: ClassConstructor<object>) => {
 	return async (
 		req: Request,
 		res: Response,
@@ -87,4 +87,14 @@ export function validateParams(dtoClass: ClassConstructor<object>) {
 
 		next();
 	};
-}
+};
+
+export const internalErrorHandler = async (
+	err: Error,
+	_req: Request,
+	res: Response,
+	_next: NextFunction,
+): Promise<any> => {
+	console.error(err.stack);
+	res.status(500).json({ message: res.__("something_went_wrong") });
+};

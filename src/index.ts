@@ -9,6 +9,7 @@ import LoginRouter from "./routes/login";
 import ProgramRouter from "./routes/programs";
 import RegisterRouter from "./routes/register";
 import UserRouter from "./routes/users";
+import { internalErrorHandler } from "./utils/middlewares";
 import passport from "./utils/passport-config";
 
 const i18n = new I18n({
@@ -29,6 +30,8 @@ app.use("/login", LoginRouter());
 app.use("/programs", ProgramRouter());
 app.use("/exercises", ExerciseRouter());
 app.use("/users", UserRouter());
+
+app.use(internalErrorHandler);
 
 const httpServer = http.createServer(app);
 
