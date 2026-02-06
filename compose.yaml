@@ -1,4 +1,13 @@
 services:
+  be:
+    build: .
+    container_name: be
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
   db:
     container_name: db
     image: postgres:18

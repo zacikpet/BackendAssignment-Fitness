@@ -1,4 +1,15 @@
-# Fitness app - assignment
+# Fitness app
+
+## How to run locally
+1. Create .env file (you can copy .env.example)
+2. Run backend and database using `docker-compose up`
+3. The API is available at localhost:8000
+
+
+
+
+
+# Original assignment
 
 ### Requirements
 
