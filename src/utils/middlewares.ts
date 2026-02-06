@@ -25,7 +25,7 @@ export const validateBody = (dtoClass: ClassConstructor<object>) => {
 
 		if (errors.length > 0) {
 			return res.status(400).json({
-				message: "Validation failed",
+				message: "Body validation failed",
 				errors: errors.map((e) => ({
 					property: e.property,
 					constraints: e.constraints,
@@ -51,7 +51,33 @@ export function validateQuery(dtoClass: ClassConstructor<object>) {
 
 		if (errors.length > 0) {
 			return res.status(400).json({
-				message: "Validation failed",
+				message: "Query validation failed",
+				errors: errors.map((e) => ({
+					property: e.property,
+					constraints: e.constraints,
+				})),
+			});
+		}
+
+		next();
+	};
+}
+
+export function validateParams(dtoClass: ClassConstructor<object>) {
+	return async (
+		req: Request,
+		res: Response,
+		next: NextFunction,
+	): Promise<any> => {
+		const dto = plainToInstance(dtoClass, req.params);
+		const errors = await validate(dto, {
+			whitelist: true,
+			forbidNonWhitelisted: true,
+		});
+
+		if (errors.length > 0) {
+			return res.status(400).json({
+				message: "Path parameter validation failed",
 				errors: errors.map((e) => ({
 					property: e.property,
 					constraints: e.constraints,

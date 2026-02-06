@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UpdateUserDto } from "../dtos/users";
+import { GetUserByIdDto, UpdateUserDto } from "../dtos/users";
 import {
 	getCurrentUser,
 	getUserById,
@@ -7,7 +7,11 @@ import {
 	updateUser,
 } from "../handlers/users";
 import { USER_ROLE } from "../utils/enums";
-import { allowedRoles, validateBody } from "../utils/middlewares";
+import {
+	allowedRoles,
+	validateBody,
+	validateParams,
+} from "../utils/middlewares";
 import passport from "../utils/passport-config";
 
 const router = Router();
@@ -31,6 +35,7 @@ export default () => {
 		"/:id",
 		passport.authenticate("jwt", { session: false }),
 		allowedRoles(USER_ROLE.ADMIN),
+		validateParams(GetUserByIdDto),
 		getUserById,
 	);
 

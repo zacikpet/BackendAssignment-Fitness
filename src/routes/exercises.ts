@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
 	CompleteExerciseDto,
 	CreateExerciseDto,
+	DeleteExerciseCompletionDto,
+	DeleteExerciseDto,
 	ListExercisesDto,
 	UpdateExerciseDto,
 } from "../dtos/exercises";
@@ -17,6 +19,7 @@ import { USER_ROLE } from "../utils/enums";
 import {
 	allowedRoles,
 	validateBody,
+	validateParams,
 	validateQuery,
 } from "../utils/middlewares";
 import passport from "../utils/passport-config";
@@ -54,6 +57,7 @@ export default () => {
 		"/:id",
 		passport.authenticate("jwt", { session: false }),
 		allowedRoles(USER_ROLE.ADMIN),
+		validateParams(DeleteExerciseDto),
 		deleteExercise,
 	);
 
@@ -61,6 +65,7 @@ export default () => {
 		"/:id/completion/:completionId",
 		passport.authenticate("jwt", { session: false }),
 		allowedRoles(USER_ROLE.USER),
+		validateParams(DeleteExerciseCompletionDto),
 		deleteExerciseCompletion,
 	);
 

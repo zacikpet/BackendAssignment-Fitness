@@ -51,3 +51,16 @@ export class UpdateExerciseDto {
 	@IsNumber()
 	programID?: number;
 }
+
+export class DeleteExerciseDto {
+	@IsNumberString()
+	id: string;
+}
+
+export class DeleteExerciseCompletionDto {
+	@IsNumberString()
+	id: string;
+
+	@IsNumberString()
+	completionId: string;
+}
