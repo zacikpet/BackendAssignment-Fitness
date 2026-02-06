@@ -9,8 +9,9 @@ export const listPrograms = async (
 	_next: NextFunction,
 ): Promise<any> => {
 	const programs = await Program.findAll();
+
 	return res.json({
 		data: programs,
-		message: "List of programs",
+		message: res.__("list_of_programs"),
 	});
 };

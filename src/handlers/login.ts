@@ -9,13 +9,17 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 	const user = await models.User.findOne({ where: { email } });
 
 	if (!user) {
-		return res.status(401).json({ message: "Invalid email or password" });
+		return res
+			.status(401)
+			.json({ message: res.__("invalid_email_or_password") });
 	}
 
 	const isPasswordValid = await bcrypt.compare(password, user.password);
 
 	if (!isPasswordValid) {
-		return res.status(401).json({ message: "Invalid email or password" });
+		return res
+			.status(401)
+			.json({ message: res.__("invalid_email_or_password") });
 	}
 
 	const token = jwt.sign(
@@ -25,7 +29,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 	);
 
 	return res.json({
-		message: "Login successful",
+		message: res.__("login_successful"),
 		data: { token, user: { id: user.id } },
 	});
 };

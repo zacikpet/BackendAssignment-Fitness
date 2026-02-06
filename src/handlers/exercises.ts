@@ -37,7 +37,7 @@ export const listExercises = async (
 
 	return res.json({
 		data: rows,
-		message: "List of exercises",
+		message: res.__("list_of_exercises"),
 		pagination: {
 			limit,
 			offset,
@@ -61,7 +61,7 @@ export const createExercise = async (
 	});
 
 	return res.json({
-		message: "Exercise created successfully",
+		message: res.__("exercise_created"),
 		data: exercise,
 	});
 };
@@ -81,7 +81,7 @@ export const completeExercise = async (
 	});
 
 	return res.json({
-		message: "Exercise created successfully",
+		message: res.__("exercise_completed"),
 		data: exercise,
 	});
 };
@@ -97,7 +97,7 @@ export const updateExercise = async (
 	const exercise = await Exercise.findByPk(id);
 
 	if (!exercise) {
-		return res.status(404).json({ message: "Exercise not found" });
+		return res.status(404).json({ message: res.__("exercise_not_found") });
 	}
 
 	await Exercise.update(
@@ -114,7 +114,7 @@ export const updateExercise = async (
 	const updatedExercise = await Exercise.findByPk(id);
 
 	return res.json({
-		message: "Exercise updated successfully",
+		message: res.__("exercise_updated"),
 		data: updatedExercise,
 	});
 };
@@ -129,13 +129,13 @@ export const deleteExercise = async (
 	const exercise = await Exercise.findByPk(id);
 
 	if (!exercise) {
-		return res.status(404).json({ message: "Exercise not found" });
+		return res.status(404).json({ message: res.__("exercise_not_found") });
 	}
 
 	await Exercise.destroy({ where: { id } });
 
 	return res.json({
-		message: "Exercise deleted successfully",
+		message: res.__("exercise_deleted"),
 	});
 };
 
@@ -149,12 +149,12 @@ export const deleteExerciseCompletion = async (
 	const exerciseCompletion = await ExerciseCompletion.findByPk(completionId);
 
 	if (!exerciseCompletion) {
-		return res.status(404).json({ message: "Exercise not completed" });
+		return res.status(404).json({ message: res.__("exercise_not_completed") });
 	}
 
 	await ExerciseCompletion.destroy({ where: { id: completionId } });
 
 	return res.json({
-		message: "Exercise completion deleted successfully",
+		message: res.__("exercise_completion_deleted"),
 	});
 };

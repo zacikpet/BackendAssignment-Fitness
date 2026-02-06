@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import http from "node:http";
+import path from "node:path";
 import express from "express";
-
+import { I18n } from "i18n";
 import { sequelize } from "./db";
 import ExerciseRouter from "./routes/exercises";
 import LoginRouter from "./routes/login";
@@ -10,11 +11,18 @@ import RegisterRouter from "./routes/register";
 import UserRouter from "./routes/users";
 import passport from "./utils/passport-config";
 
+const i18n = new I18n({
+	locales: ["en", "sk"],
+	defaultLocale: "en",
+	directory: path.join(__dirname, "locales"),
+	header: "language",
+});
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
+app.use(i18n.init);
 
 app.use("/register", RegisterRouter());
 app.use("/login", LoginRouter());

@@ -17,7 +17,7 @@ export const listUsers = async (
 
 	return res.json({
 		data: serializedUsers,
-		message: "List of users",
+		message: res.__("list_of_users"),
 	});
 };
 
@@ -34,7 +34,7 @@ export const getCurrentUser = async (
 	});
 
 	if (!user) {
-		return res.status(404).json({ message: "User not found" });
+		return res.status(404).json({ message: res.__("user_not_found") });
 	}
 
 	const completedExercises = user.exerciseCompletions.map((c) => ({
@@ -52,7 +52,7 @@ export const getCurrentUser = async (
 			nickName: user.nickName,
 			completedExercises,
 		},
-		message: "User detail",
+		message: res.__("user_detail"),
 	});
 };
 
@@ -64,12 +64,12 @@ export const getUserById = async (
 	const user = await User.findByPk(req.params.id);
 
 	if (!user) {
-		return res.status(404).json({ message: "User not found" });
+		return res.status(404).json({ message: res.__("user_not_found") });
 	}
 
 	return res.json({
 		data: serializeUser(req.user.role)(user.toJSON()),
-		message: "User detail",
+		message: res.__("list_of_users"),
 	});
 };
 
@@ -84,7 +84,7 @@ export const updateUser = async (
 	const user = await User.findByPk(id);
 
 	if (!user) {
-		return res.status(404).json({ message: "User not found" });
+		return res.status(404).json({ message: res.__("user_not_found") });
 	}
 
 	await User.update(
@@ -103,7 +103,7 @@ export const updateUser = async (
 	const updatedUser = await User.findByPk(id, { plain: true });
 
 	return res.json({
-		message: "User updated successfully",
+		message: res.__("user_updated"),
 		data: serializeUser(req.user.role)(updatedUser.toJSON()),
 	});
 };

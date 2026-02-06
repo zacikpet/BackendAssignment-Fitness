@@ -1,0 +1,20 @@
+{    
+    "registration_successful": "Registration successful",
+    "invalid_email_or_password": "Invalid email or password",
+    "login_successful": "Login successful",
+    "list_of_programs": "List of programs",
+    "list_of_exercises": "List of exercises",
+    "exercise_created": "Exercise created successfuly",
+    "exercise_completed": "Exercise marked as completed",
+    "exercise_not_found": "Exercise not found",
+    "exercise_updated": "Exercise updated successfuly",
+    "exercise_deleted": "Exercise deleted",
+    "exercise_completion_deleted": "Exercise completion deleted",
+    "list_of_users": "List of users",
+    "user_not_found": "User not found",
+    "user_detail": "User detail",
+    "user_updated": "User updated successfuly",
+    "body_validation_failed": "Body validation failed",
+    "query_validation_failed": "Query validation failed",
+    "params_validation_failed": "Path parameters validation failed"
+}

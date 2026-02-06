@@ -1,0 +1,20 @@
+{
+    "registration_successful": "Registrácia úspešná",
+    "invalid_email_or_password": "Nesprávne meno alebo heslo",
+    "login_successful": "Prihlásenie úspešné",
+    "list_of_programs": "Zoznam programov",
+    "list_of_exercises": "Zoznam cvičení",
+    "exercise_created": "Cvičenie úspešne vytvorené",
+    "exercise_completed": "Cvičenie označené za dokončené",
+    "exercise_not_found": "Cvičenie neexistuje",
+    "exercise_updated": "Cvičenie úspešne aktualizované",
+    "exercise_deleted": "Cvičenie odstránené",
+    "exercise_completion_deleted": "Cvičenie označené za nedokončené",
+    "list_of_users": "Zoznam používateľov",
+    "user_not_found": "Používateľ neexistuje",
+    "user_detail": "Detail používateľa",
+    "user_updated": "Používateľ úspešne aktualizovaný",
+    "body_validation_failed": "Validácia tela requestu zlyhala",
+    "query_validation_failed": "Validácie query parametrov zlyhala",
+    "params_validation_failed": "Validácia URL parametrov zlyhala"
+}

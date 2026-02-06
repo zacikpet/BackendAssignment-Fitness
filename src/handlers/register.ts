@@ -15,7 +15,7 @@ export const register = async (
 	});
 
 	return res.json({
-		message: "User registered successfully",
+		message: res.__("registration_successful"),
 		data: {
 			user: {
 				id: user.id,
