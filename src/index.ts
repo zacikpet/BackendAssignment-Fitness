@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import http from "node:http";
 import express from "express";
 
