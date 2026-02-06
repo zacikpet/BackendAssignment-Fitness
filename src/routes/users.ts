@@ -12,16 +12,23 @@ import passport from "../utils/passport-config";
 const router = Router();
 
 export default () => {
-	router.get("/", passport.authenticate("jwt", { session: false }), listUsers);
+	router.get(
+		"/",
+		passport.authenticate("jwt", { session: false }),
+		allowedRoles(USER_ROLE.USER, USER_ROLE.ADMIN),
+		listUsers,
+	);
 
 	router.get(
 		"/me",
+		allowedRoles(USER_ROLE.USER),
 		passport.authenticate("jwt", { session: false }),
 		getCurrentUser,
 	);
 
 	router.get(
 		"/:id",
+		allowedRoles(USER_ROLE.ADMIN),
 		passport.authenticate("jwt", { session: false }),
 		getUserById,
 	);
