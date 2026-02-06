@@ -1,5 +1,6 @@
 import { DataTypes, type Model, type Sequelize } from "sequelize";
 import { EXERCISE_DIFFICULTY } from "../utils/enums";
+import type { ExerciseCompletionModel } from "./exerciseCompletion";
 import type { ProgramModel } from "./program";
 
 export interface ExerciseModel extends Model {
@@ -8,6 +9,7 @@ export interface ExerciseModel extends Model {
 	name: string;
 
 	program: ProgramModel;
+	exerciseCompletions: ExerciseCompletionModel;
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
@@ -38,6 +40,15 @@ export default (sequelize: Sequelize, modelName: string) => {
 		ExerciseModelCtor.belongsTo(models.Program, {
 			foreignKey: {
 				name: "programID",
+				allowNull: false,
+			},
+		});
+	};
+
+	ExerciseModelCtor.associate = (models) => {
+		ExerciseModelCtor.hasMany(models.ExerciseCompletion, {
+			foreignKey: {
+				name: "exerciseID",
 				allowNull: false,
 			},
 		});

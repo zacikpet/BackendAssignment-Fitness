@@ -1,3 +1,4 @@
+import { equal } from "assert";
 import {
 	type NextFunction,
 	type Request,
@@ -11,7 +12,7 @@ import passport from "../utils/passport-config";
 
 const router = Router();
 
-const { Exercise, Program } = models;
+const { Exercise, Program, ExerciseCompletion } = models;
 
 export default () => {
 	router.get(
@@ -43,6 +44,27 @@ export default () => {
 				name,
 				difficulty,
 				programID,
+			});
+
+			return res.json({
+				message: "Exercise created successfully",
+				data: exercise,
+			});
+		},
+	);
+
+	router.post(
+		"/:id/completion",
+		passport.authenticate("jwt", { session: false }),
+		allowedRoles(USER_ROLE.USER),
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const { completedAt, durationSeconds } = req.body;
+
+			const exercise = await ExerciseCompletion.create({
+				completedAt,
+				durationSeconds,
+				exerciseID: req.params.id,
+				userID: req.user.id,
 			});
 
 			return res.json({
@@ -103,6 +125,28 @@ export default () => {
 
 			return res.json({
 				message: "Exercise deleted successfully",
+			});
+		},
+	);
+
+	router.delete(
+		"/:id/completion/:completionId",
+		passport.authenticate("jwt", { session: false }),
+		allowedRoles(USER_ROLE.USER),
+		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
+			const { completionId } = req.params;
+
+			const exerciseCompletion =
+				await ExerciseCompletion.findByPk(completionId);
+
+			if (!exerciseCompletion) {
+				return res.status(404).json({ message: "Exercise not completed" });
+			}
+
+			await ExerciseCompletion.destroy({ where: { id: completionId } });
+
+			return res.json({
+				message: "Exercise completion deleted successfully",
 			});
 		},
 	);

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import defineExercise from "./exercise";
+import defineExerciseCompletion from "./exerciseCompletion";
 import defineProgram from "./program";
 import defineUser from "./user";
 
@@ -26,11 +27,16 @@ sequelize
 const Exercise = defineExercise(sequelize, "exercise");
 const Program = defineProgram(sequelize, "program");
 const User = defineUser(sequelize, "user");
+const ExerciseCompletion = defineExerciseCompletion(
+	sequelize,
+	"exerciseCompletion",
+);
 
 const models = {
 	Exercise,
 	Program,
 	User,
+	ExerciseCompletion,
 };
 type Models = typeof models;
 

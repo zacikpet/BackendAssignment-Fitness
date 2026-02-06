@@ -12,7 +12,7 @@ import { serializeUser } from "../utils/serializers";
 
 const router = Router();
 
-const { User } = models;
+const { User, ExerciseCompletion, Exercise } = models;
 
 export default () => {
 	router.get(
@@ -36,11 +36,23 @@ export default () => {
 		"/me",
 		passport.authenticate("jwt", { session: false }),
 		async (req: Request, res: Response, _next: NextFunction): Promise<any> => {
-			const user = await User.findByPk(req.user.id);
+			const user = await User.findByPk(req.user.id, {
+				include: {
+					model: ExerciseCompletion,
+					include: [{ model: Exercise }],
+				},
+			});
 
 			if (!user) {
 				return res.status(404).json({ message: "User not found" });
 			}
+
+			const completedExercises = user.exerciseCompletions.map((c) => ({
+				...c.exercise.toJSON(),
+				completionID: c.id,
+				durationSeconds: c.durationSeconds,
+				completedAt: c.completedAt,
+			}));
 
 			return res.json({
 				data: {
@@ -48,6 +60,7 @@ export default () => {
 					surname: user.surname,
 					age: user.age,
 					nickName: user.nickName,
+					completedExercises,
 				},
 				message: "User detail",
 			});

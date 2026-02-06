@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { DataTypes, type Model, type Sequelize } from "sequelize";
 import { USER_ROLE } from "../utils/enums";
+import type { ExerciseCompletionModel } from "./exerciseCompletion";
 
 export interface UserModel extends Model {
 	id: number;
@@ -11,10 +12,12 @@ export interface UserModel extends Model {
 	surname?: string;
 	nickName?: string;
 	age?: number;
+
+	exerciseCompletions: ExerciseCompletionModel[];
 }
 
 export default (sequelize: Sequelize, modelName: string) => {
-	const User = sequelize.define<UserModel>(
+	const UserModelCtor = sequelize.define<UserModel>(
 		modelName,
 		{
 			id: {
@@ -73,5 +76,14 @@ export default (sequelize: Sequelize, modelName: string) => {
 		},
 	);
 
-	return User;
+	UserModelCtor.associate = (models) => {
+		UserModelCtor.hasMany(models.ExerciseCompletion, {
+			foreignKey: {
+				name: "userID",
+				allowNull: false,
+			},
+		});
+	};
+
+	return UserModelCtor;
 };
